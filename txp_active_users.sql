@@ -17,7 +17,7 @@ SELECT
   --num_new_users,
   engagement_ratio,
   smoothed_dau,
-  smoothed_dau/mau AS smoothed_engagment_ratio
+  smoothed_dau/mau AS smoothed_engagement_ratio
 FROM
   ( -- Individual Experiments calculations
     SELECT
