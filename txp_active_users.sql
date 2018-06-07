@@ -45,6 +45,7 @@ FROM
     WHERE
       txpExperiments.submission_date_s3 < DATE_FORMAT(CURRENT_TIMESTAMP, '%Y%m%d')
       AND txpExperiments.submission_date_s3 > DATE_FORMAT(DATE_ADD('day', -7*10, CURRENT_TIMESTAMP), '%Y%m%d')
+      AND test IN ('FirefoxColor@mozilla.com' , 'side-view@mozilla.org')
     GROUP BY
       txpExperiments.test,
       txpExperiments.submission_date_s3,
