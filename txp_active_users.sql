@@ -25,6 +25,7 @@ FROM
         WHEN 'FirefoxColor@mozilla.com'     THEN 'Color'
         WHEN 'side-view@mozilla.org'        THEN 'Side View'
         WHEN 'testpilot'                    THEN 'TestPilot Addon'
+        WHEN 'notes@mozilla.com'            THEN 'Notes'
         ELSE                                txpExperiments.test
       END                                      AS test_group,
       DATE_PARSE(txpExperiments.submission_date_s3, '%Y%m%d') AS date,
@@ -38,7 +39,7 @@ FROM
         ROWS BETWEEN 6 PRECEDING AND 0 FOLLOWING
       )                                        AS smoothed_dau
     FROM
-      txp_mau_dau_simple txpExperiments
+      txp_mau_dau_simple AS txpExperiments
       /*LEFT JOIN tmp_user_start newUsers ON (
         txpExperiments.day = newUsers.day
         AND txpExperiments.test = newUsers.test
@@ -46,7 +47,7 @@ FROM
     WHERE
       txpExperiments.submission_date_s3 < DATE_FORMAT(CURRENT_TIMESTAMP, '%Y%m%d')
       AND txpExperiments.submission_date_s3 > DATE_FORMAT(DATE_ADD('day', -7*10, CURRENT_TIMESTAMP), '%Y%m%d')
-      AND test IN ('FirefoxColor@mozilla.com' , 'side-view@mozilla.org', 'testpilot')
+      AND test IN ('FirefoxColor@mozilla.com' , 'side-view@mozilla.org', 'notes@mozilla.com', 'testpilot')
     GROUP BY
       txpExperiments.test,
       txpExperiments.submission_date_s3,
